@@ -2,3 +2,6 @@
 /bin_test/
 /generated/
 /bin/
+*.o
+*.so
+osgi_enroute_rube_goldberg_camera_V4L2Camera.h
