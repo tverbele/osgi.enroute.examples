@@ -10,8 +10,9 @@ Bundle-Description: 				\
 	${warning;Please update this Bundle-Description in osgi.enroute.rube.goldberg.api/bnd.bnd}
 
 	
-Export-Package:  \
-	osgi.enroute.rube.goldberg.api;provide:=true
+Export-Package: \
+	osgi.enroute.rube.goldberg.api;provide:=true,\
+	osgi.enroute.rube.goldberg.camera.api
 
 
 Require-Capability: \
