@@ -7,8 +7,8 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
-import osgi.enroute.rube.goldberg.camera.api.Camera;
-import osgi.enroute.rube.goldberg.camera.api.CameraListener;
+import osgi.enroute.rube.goldberg.api.camera.Camera;
+import osgi.enroute.rube.goldberg.api.camera.listener.CameraListener;
 
 @Component(immediate=true)
 public class V4L2Camera implements Camera {
@@ -30,9 +30,6 @@ public class V4L2Camera implements Camera {
 	@Activate
 	public void activate(){
 		init();
-		System.out.println("ACTIVATE!");
-		
-		start();
 	}
 	
 	@Deactivate

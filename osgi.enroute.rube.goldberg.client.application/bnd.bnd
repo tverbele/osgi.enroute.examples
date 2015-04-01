@@ -9,7 +9,8 @@ Bundle-Description: \
 
 Private-Package: \
 	osgi.enroute.rube.goldberg.client.application,\
-	osgi.enroute.rube.goldberg.camera
+	osgi.enroute.rube.goldberg.camera,\
+	osgi.enroute.rube.goldberg.client.contraption
 
 Bundle-NativeCode: x86_64/libCamera.so;osname=Linux;processor=x86_64
 	
@@ -26,4 +27,6 @@ Bundle-NativeCode: x86_64/libCamera.so;osname=Linux;processor=x86_64
 	osgi.enroute.web.simple.provider;version=1.2,\
 	osgi.enroute.rube.goldberg.api;version=latest
 	
-Export-Package: osgi.enroute.rube.goldberg.camera.api
+Export-Package: \
+	osgi.enroute.rube.goldberg.api,\
+	osgi.enroute.rube.goldberg.api.camera

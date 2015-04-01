@@ -1,4 +1,4 @@
-package osgi.enroute.rube.goldberg.camera.api;
+package osgi.enroute.rube.goldberg.api.camera;
 
 public interface Camera {
 

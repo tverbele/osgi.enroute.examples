@@ -6,8 +6,7 @@ Bundle-Version: 1.0.0.${tstamp}
 Bundle-Description: \
 	This is the OSGI ENROUTE RUBE GOLDBERG SERVER APPLICATION bundle.
 
-Private-Package:  \
-	osgi.enroute.rube.goldberg.server.application
+Private-Package: osgi.enroute.rube.goldberg.server.application
 	
 -includeresource: \
 	{readme.md}, \
@@ -21,3 +20,6 @@ Private-Package:  \
 	osgi.enroute.web.simple.provider;version=1.2,\
 	osgi.enroute.rube.goldberg.api;version=latest
 	
+Export-Package: \
+	osgi.enroute.rube.goldberg.api.server,\
+	osgi.enroute.rube.goldberg.api.camera.listener

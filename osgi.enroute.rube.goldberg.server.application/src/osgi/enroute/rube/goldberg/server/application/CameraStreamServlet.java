@@ -16,7 +16,7 @@ import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.http.HttpService;
 import org.osgi.service.http.NamespaceException;
 
-import osgi.enroute.rube.goldberg.camera.api.CameraListener;
+import osgi.enroute.rube.goldberg.api.camera.listener.CameraListener;
 
 @Component
 public class CameraStreamServlet extends HttpServlet implements CameraListener {
