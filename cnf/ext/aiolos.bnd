@@ -1,0 +1,19 @@
+#
+# -AIOLOS-
+# 
+# This file contains the link to AIOLOS repositories for some extra bundles (e.g. Remote Services etc.)
+#
+
+-pluginpath:\
+        ${build}/cache/biz.aQute.repository.jar;url=${bnd-release}/biz.aQute.repository/biz.aQute.repository-latest.jar
+
+            
+-plugin.aiolos.repo= \
+	aQute.bnd.deployer.repository.FixedIndexedRepo; \
+		name=AIOLOS; \
+		locations=http://aiolos.intec.ugent.be/repositories/aiolos/index.xml;
+
+-plugin.build.repo= \
+	aQute.bnd.deployer.repository.FixedIndexedRepo; \
+		name=Build; \
+		locations=http://aiolos.intec.ugent.be/repositories/buildrepo/index.xml;

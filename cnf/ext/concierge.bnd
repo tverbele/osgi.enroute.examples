@@ -1,0 +1,16 @@
+#
+# -Concierge-
+# 
+# This file contains the link to some Concierge R5 builds (small OSGi runtime for embedded devices like the Pi) 
+#
+
+-pluginpath:\
+        ${build}/cache/biz.aQute.repository.jar;url=${bnd-release}/biz.aQute.repository/biz.aQute.repository-latest.jar
+
+            
+-plugin.concierge.repo= \
+	aQute.bnd.deployer.repository.FixedIndexedRepo; \
+		name=Concierge; \
+		locations=http://aiolos.intec.ugent.be/repositories/concierge/index.xml;
+		
+	
