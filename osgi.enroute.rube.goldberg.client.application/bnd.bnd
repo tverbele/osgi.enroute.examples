@@ -12,7 +12,7 @@ Private-Package: \
 	osgi.enroute.rube.goldberg.camera,\
 	osgi.enroute.rube.goldberg.client.contraption
 
-Bundle-NativeCode: x86_64/libCamera.so;osname=Linux;processor=x86_64
+Bundle-NativeCode: x86_64/libCamera.so;osname=Linux;processor=x86_64,arm/libCamera.so;osname=Linux;processor=arm
 	
 -includeresource: \
 	{readme.md}, \
