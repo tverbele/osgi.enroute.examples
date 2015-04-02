@@ -1,16 +1,21 @@
 package osgi.enroute.rube.goldberg.camera;
 
 import java.nio.ByteBuffer;
+import java.util.Map;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
+import osgi.enroute.capabilities.ConfigurerExtender;
 import osgi.enroute.rube.goldberg.api.camera.Camera;
 import osgi.enroute.rube.goldberg.api.camera.listener.CameraListener;
 
-@Component(immediate=true)
+@ConfigurerExtender
+@Component(name="osgi.enroute.rube.goldberg.camera", 
+	configurationPolicy=ConfigurationPolicy.REQUIRE)
 public class V4L2Camera implements Camera {
 	
 	private volatile boolean on;
@@ -19,6 +24,8 @@ public class V4L2Camera implements Camera {
 	private int dev; // native device id
 	private int format = FORMAT_MJPEG;
 	private int fps = 15;
+	private int width; // requested width/height, could end up in something different
+	private int height;
 	
 	private byte[] buffer;
 	
@@ -28,7 +35,12 @@ public class V4L2Camera implements Camera {
 	private CameraListener listener = null;
 	
 	@Activate
-	public void activate(){
+	public void activate(Map<String, Object> config){
+		device = (String)config.get("device");
+		width = (Integer)config.get("width");
+		height = (Integer)config.get("height");
+		fps = (Integer)config.get("fps");
+		
 		init();
 	}
 	
@@ -66,7 +78,7 @@ public class V4L2Camera implements Camera {
 		on = true;
 		captureThread = new Thread(new Runnable(){
 			public void run(){
-				final ByteBuffer bb = start_capturing(dev, 640, 480, format);
+				final ByteBuffer bb = start_capturing(dev, width, height, format);
 				System.out.println("Started capturing "+get_width(dev)+"x"+get_height(dev));
 
 				final int size = get_width(dev)*get_height(dev);
