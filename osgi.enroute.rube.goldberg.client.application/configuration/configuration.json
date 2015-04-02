@@ -12,5 +12,10 @@
       "width":								640,
       "height":								480,
       "fps":								15
+   },
+   {
+      "service.factoryPid":					"osgi.enroute.rube.goldberg.server.connector",
+      "service.pid":						"connector",
+      "uri":								"r-osgi://127.0.0.1:9278"
    }
 ]

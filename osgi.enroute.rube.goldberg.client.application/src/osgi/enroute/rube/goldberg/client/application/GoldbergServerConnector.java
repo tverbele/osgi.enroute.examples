@@ -5,23 +5,26 @@ import java.util.Map;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.remoteserviceadmin.EndpointDescription;
 import org.osgi.service.remoteserviceadmin.ImportRegistration;
 import org.osgi.service.remoteserviceadmin.RemoteServiceAdmin;
 
+import osgi.enroute.capabilities.ConfigurerExtender;
 import osgi.enroute.rube.goldberg.api.camera.listener.CameraListener;
 import osgi.enroute.rube.goldberg.api.server.GoldbergServer;
 
-@Component
+@ConfigurerExtender
+@Component(name="osgi.enroute.rube.goldberg.server.connector", 
+	configurationPolicy=ConfigurationPolicy.REQUIRE)
 public class GoldbergServerConnector {
 
 	private RemoteServiceAdmin rsa;
 	
 	private ImportRegistration serverImport;
 	private ImportRegistration listenerImport;
-
 	
 	private String uri = "r-osgi://127.0.0.1:9278";
 	
@@ -32,7 +35,10 @@ public class GoldbergServerConnector {
 	}
 	
 	@Activate
-	public void activate(){
+	public void activate(Map<String, String> config){
+		uri = config.get("uri");
+		// TODO check uri for correctness
+		
 		Map<String, Object> serverEndpointProps = new HashMap<String, Object>();
 		serverEndpointProps.put("endpoint.id", uri);
 		serverEndpointProps.put("service.imported.configs", "be.iminds.aiolos.r-osgi");
@@ -42,8 +48,7 @@ public class GoldbergServerConnector {
 		serverImport = rsa.importService(serverEndpoint);
 		
 		if(serverImport.getException()!=null){
-			System.err.println("Error connecting to Goldberg server");
-			serverImport.getException().printStackTrace();
+			System.err.println("Error connecting to Goldberg server: "+serverImport.getException().getMessage());
 		}
 		
 		// already import camera listener as well?
@@ -56,8 +61,7 @@ public class GoldbergServerConnector {
 		listenerImport = rsa.importService(listenerEndpoint);
 		
 		if(listenerImport.getException()!=null){
-			System.err.println("Error connecting to Goldberg server Camera listener");
-			listenerImport.getException().printStackTrace();
+			System.err.println("Error connecting to Goldberg server Camera listener: "+listenerImport.getException().getMessage());
 		}
 	}
 	
