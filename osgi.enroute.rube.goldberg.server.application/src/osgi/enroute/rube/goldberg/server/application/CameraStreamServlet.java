@@ -15,10 +15,15 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.http.HttpService;
 import org.osgi.service.http.NamespaceException;
+import org.osgi.service.remoteserviceadmin.RemoteConstants;
 
+import osgi.enroute.debug.api.Debug;
 import osgi.enroute.rube.goldberg.api.camera.listener.CameraListener;
 
-@Component
+@Component(
+	property = { 
+		RemoteConstants.SERVICE_EXPORTED_INTERFACES +"=osgi.enroute.rube.goldberg.api.camera.listener.CameraListener"
+	})
 public class CameraStreamServlet extends HttpServlet implements CameraListener {
 
 	private List<AsyncContext> streams = new ArrayList<AsyncContext>();

@@ -25,7 +25,8 @@ Bundle-NativeCode: x86_64/libCamera.so;osname=Linux;processor=x86_64
 	osgi.enroute.base.api,\
 	osgi.enroute.logger.simple.provider,\
 	osgi.enroute.web.simple.provider;version=1.2,\
-	osgi.enroute.rube.goldberg.api;version=latest
+	osgi.enroute.rube.goldberg.api;version=latest,\
+	osgi.cmpn;version=5.0
 	
 Export-Package: \
 	osgi.enroute.rube.goldberg.api,\

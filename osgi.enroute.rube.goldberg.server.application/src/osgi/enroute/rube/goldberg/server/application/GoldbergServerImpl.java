@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.remoteserviceadmin.RemoteConstants;
 
 import osgi.enroute.debug.api.Debug;
 import osgi.enroute.rube.goldberg.api.server.GoldbergServer;
@@ -14,6 +15,7 @@ import osgi.enroute.rube.goldberg.api.server.GoldbergServer;
 		Debug.COMMAND_SCOPE + "=goldberg",
 		Debug.COMMAND_FUNCTION + "=start",
 		Debug.COMMAND_FUNCTION + "=list",
+		RemoteConstants.SERVICE_EXPORTED_INTERFACES +"=osgi.enroute.rube.goldberg.api.server.GoldbergServer"
 	})
 public class GoldbergServerImpl implements GoldbergServer {
 
