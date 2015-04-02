@@ -23,14 +23,18 @@
 	
 	
 	
-	var mainProvider = function($scope, $http) {
-		$http.get('/rest/contraptions').success(
-			function(response) {
-					$scope.contraptions = angular.copy(JSON.parse(response));
-					console.log($scope.contraptions);
-				}
-		);
+	var mainProvider = function($scope, $http, $timeout) {
 		$scope.contraptions = [];
+		// TODO use eventing for this instead of polling
+	    (function tick() {
+			$http.get('/rest/contraptions').success(
+					function(response) {
+							$scope.contraptions = angular.copy(JSON.parse(response));
+							$timeout(tick, 10000);
+					}
+			);
+	    })();
+		
 		$scope.running = false;
 		$scope.start = function(contraption) {
 			$http.get('/rest/start/'+contraption).success(
