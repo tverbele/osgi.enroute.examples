@@ -1,7 +1,9 @@
 package osgi.enroute.rube.goldberg.server.application;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
@@ -9,6 +11,7 @@ import org.osgi.service.remoteserviceadmin.RemoteConstants;
 
 import osgi.enroute.debug.api.Debug;
 import osgi.enroute.rube.goldberg.api.server.GoldbergServer;
+import osgi.enroute.rube.goldberg.api.server.GoldbergServerControl;
 
 @Component(immediate=true,
 	property = { 
@@ -17,7 +20,7 @@ import osgi.enroute.rube.goldberg.api.server.GoldbergServer;
 		Debug.COMMAND_FUNCTION + "=list",
 		RemoteConstants.SERVICE_EXPORTED_INTERFACES +"=osgi.enroute.rube.goldberg.api.server.GoldbergServer"
 	})
-public class GoldbergServerImpl implements GoldbergServer {
+public class GoldbergServerImpl implements GoldbergServer, GoldbergServerControl {
 
 	private static final int POLL_TIMEOUT = 60000;
 	
@@ -31,6 +34,8 @@ public class GoldbergServerImpl implements GoldbergServer {
 		} catch (InterruptedException e) {
 			return true;
 		}
+		// TODO remove here or start a timer before removing to allow for next poll call
+		pollers.remove(id);
 		return false;
 	}
 
@@ -39,6 +44,7 @@ public class GoldbergServerImpl implements GoldbergServer {
 		System.out.println(id+" done");
 	}
 	
+	@Override
 	public void start(String id){
 		System.out.println("Start "+id);
 		Thread poller = pollers.get(id);
@@ -47,11 +53,14 @@ public class GoldbergServerImpl implements GoldbergServer {
 		}
 	}
 
-	public void list(){
+	@Override
+	public List<String> list(){
+		ArrayList<String> contraptions = new ArrayList<String>();
 		synchronized(pollers){
 			for(String id : pollers.keySet()){
-				System.out.println("* "+id);
+				contraptions.add(id);
 			}
 		}
+		return contraptions;
 	}
 }
