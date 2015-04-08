@@ -1,5 +1,6 @@
 package osgi.enroute.rube.goldberg.client.application;
 
+import org.osgi.framework.ServiceException;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -48,17 +49,23 @@ public class GoldbergPoller {
 			public void run(){
 				while(polling){
 					// poll server ...
-					boolean start = server.poll(contraption.getId());
-					if(start){
-						// start camera stream
-						camera.start();
+					try {
+						boolean start = server.poll(contraption.getId());
+						if(start){
+							// start camera stream
+							camera.start();
+							
+							// run contraption
+							contraption.run();
+							server.done(contraption.getId());
+							
+							// stop camera stream
+							camera.stop();
+						}
+					} catch(ServiceException e){
+						// polling server failed
+						polling = false;
 						
-						// run contraption
-						contraption.run();
-						server.done(contraption.getId());
-						
-						// stop camera stream
-						camera.stop();
 					}
 				}
 			}
