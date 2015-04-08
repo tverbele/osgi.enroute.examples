@@ -85,6 +85,8 @@ JNIEXPORT void JNICALL Java_osgi_enroute_rube_goldberg_camera_V4L2Camera_stop_1c
 
 	stop_capturing(cam);
 	uninit_mmap(cam);
+
+	free(cam->frame);
 }
 
 JNIEXPORT void JNICALL Java_osgi_enroute_rube_goldberg_camera_V4L2Camera_close_1device
@@ -94,7 +96,6 @@ JNIEXPORT void JNICALL Java_osgi_enroute_rube_goldberg_camera_V4L2Camera_close_1
 	// close device;
 	close_device(cam);
 
-	free(cam->frame);
 	free(cam);
 	cameras[index] = 0;
 }
