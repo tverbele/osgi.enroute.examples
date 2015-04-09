@@ -23,7 +23,6 @@ public class V4L2Camera implements Camera {
 	private String device = "/dev/video0";
 	private int dev; // native device id
 	private int format = FORMAT_MJPEG;
-	private int fps = 15;
 	private int width; // requested width/height, could end up in something different
 	private int height;
 	
@@ -39,7 +38,6 @@ public class V4L2Camera implements Camera {
 		device = (String)config.get("device");
 		width = (Integer)config.get("width");
 		height = (Integer)config.get("height");
-		fps = (Integer)config.get("fps");
 		
 		init();
 	}
@@ -95,9 +93,11 @@ public class V4L2Camera implements Camera {
 					break;
 				}
 				
+				long timestamp;
+				
 				while(on){
 					next_frame(dev);
-					
+					timestamp = System.currentTimeMillis();
 					
 					int start = -1;
 					int end = -1;
@@ -122,13 +122,8 @@ public class V4L2Camera implements Camera {
 					    bb.get(buffer);
 					    
 					    if(listener!=null){
-					    	listener.nextFrame(buffer);
+					    	listener.nextFrame(timestamp, buffer);
 					    }
-					}
-					
-					try {
-						Thread.sleep(1000/fps);
-					} catch (InterruptedException e) {
 					}
 				}
 				
