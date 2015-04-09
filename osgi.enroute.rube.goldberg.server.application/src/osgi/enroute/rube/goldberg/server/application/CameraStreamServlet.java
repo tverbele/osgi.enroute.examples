@@ -1,6 +1,9 @@
 package osgi.enroute.rube.goldberg.server.application;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -13,6 +16,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.http.HttpService;
@@ -45,6 +50,27 @@ public class CameraStreamServlet extends HttpServlet implements CameraListener {
 	private volatile boolean playing = false; // wait until buffer is filled
 	private volatile boolean listening = false; //check whether someone is listening
 
+	private byte[] blank;
+	
+	@Activate
+	public void activate(BundleContext context){
+		// read blank jpg
+		try {
+			URL url = context.getBundle().getResource("static/osgi.enroute.rube.goldberg.server/img/blank.jpg");
+			InputStream is = url.openStream();
+			ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+			int nRead;
+			byte[] data = new byte[16384];
+			while ((nRead = is.read(data, 0, data.length)) != -1) {
+			  buffer.write(data, 0, nRead);
+			}
+			buffer.flush();
+			blank = buffer.toByteArray();
+			is.close();
+			buffer.close();
+		} catch(IOException e){
+		}
+	}
 	
 	@Reference
 	public void setHttpService(HttpService http){
@@ -83,8 +109,10 @@ public class CameraStreamServlet extends HttpServlet implements CameraListener {
 									timestamp = f.timestamp;
 									sendFrame(f.data);
 									
-									if(buffer.isEmpty())
+									if(buffer.isEmpty()) {
 										playing = false;
+										sendFrame(blank);
+									}
 								} catch(InterruptedException e){}
 							}
 						}
