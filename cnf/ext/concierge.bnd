@@ -12,5 +12,3 @@
 	aQute.bnd.deployer.repository.FixedIndexedRepo; \
 		name=Concierge; \
 		locations=http://aiolos.intec.ugent.be/repositories/concierge/index.xml;
-		
-	
