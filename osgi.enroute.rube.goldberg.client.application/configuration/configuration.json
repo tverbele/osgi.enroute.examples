@@ -10,13 +10,12 @@
       "service.pid":						"camera",
       "device":								"/dev/video0",
       "width":								640,
-      "height":								480,
-      "fps":								10
+      "height":								480
    },
    {
       "service.factoryPid":					"osgi.enroute.rube.goldberg.server.connector",
       "service.pid":						"connector",
-      "uri":								"r-osgi://127.0.0.1:9278"
+      "uri":								"r-osgi://52.1.223.223:9278"
    },
    {
       "service.factoryPid":					"osgi.enroute.rube.goldberg.contraption.dummy",

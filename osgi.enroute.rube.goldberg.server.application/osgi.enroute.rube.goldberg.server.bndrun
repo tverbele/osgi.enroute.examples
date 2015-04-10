@@ -31,7 +31,6 @@ JPMCommand:					server
 	org.apache.felix.metatype;version='[1.0.10,1.0.11)',\
 	org.apache.felix.scr;version='[1.8.2,1.8.3)',\
 	org.eclipse.equinox.coordinator;version='[1.3.0,1.3.1)',\
-	osgi.cmpn;version='[5.0.0,5.0.1)',\
 	osgi.enroute.base.simple.provider;version='[1.2.0,1.2.1)',\
 	osgi.enroute.configurer.simple.provider;version='[1.2.1,1.2.2)',\
 	osgi.enroute.google.angular.webresource;version='[1.3.8,1.3.9)',\
@@ -40,4 +39,6 @@ JPMCommand:					server
 	osgi.enroute.twitter.bootstrap.webresource;version='[3.3.1,3.3.2)',\
 	osgi.enroute.web.simple.provider;version='[1.3.0,1.3.1)',\
 	slf4j.api;version='[1.7.2,1.7.3)'
--resolve: auto
+
+-runproperties:\
+	rsa.ip=52.1.223.223
