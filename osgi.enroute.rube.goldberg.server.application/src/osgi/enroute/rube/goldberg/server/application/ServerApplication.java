@@ -4,10 +4,15 @@ import java.util.Iterator;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.event.Event;
+import org.osgi.service.event.EventAdmin;
+import org.osgi.service.event.EventConstants;
+import org.osgi.service.event.EventHandler;
 
 import osgi.enroute.capabilities.AngularWebResource;
 import osgi.enroute.capabilities.BootstrapWebResource;
 import osgi.enroute.capabilities.ConfigurerExtender;
+import osgi.enroute.capabilities.EventAdminSSEEndpoint;
 import osgi.enroute.capabilities.WebServerExtender;
 import osgi.enroute.rest.api.REST;
 import osgi.enroute.rest.api.RESTRequest;
@@ -15,12 +20,20 @@ import osgi.enroute.rube.goldberg.api.server.GoldbergServerControl;
 
 @AngularWebResource(resource={"angular.js","angular-resource.js", "angular-route.js"}, priority=1000)
 @BootstrapWebResource(resource="css/bootstrap.css")
+@EventAdminSSEEndpoint
 @WebServerExtender
 @ConfigurerExtender
 @Component(name="osgi.enroute.rube.goldberg.server")
 public class ServerApplication implements REST {
 
 	private GoldbergServerControl control;
+	
+	private EventAdmin eventAdmin;
+	
+	@Reference
+	public void setEventAdmin(EventAdmin ea){
+		eventAdmin = ea;
+	}
 	
 	@Reference
 	public void setGoldbergServerControl(GoldbergServerControl c){

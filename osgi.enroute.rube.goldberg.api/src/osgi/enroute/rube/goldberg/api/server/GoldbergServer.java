@@ -8,6 +8,8 @@ package osgi.enroute.rube.goldberg.api.server;
  */
 public interface GoldbergServer {
 	
+	public static final String TOPIC = "osgi/enroute/rube/goldberg";
+
 	/**
 	 * Poll the server whether the contraption can start.
 	 */
